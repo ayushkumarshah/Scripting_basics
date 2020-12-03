@@ -15,7 +15,7 @@ have been compiled from the following 2 courses.
 |`echo $SHELL`||
 |`man command-name`||
 |`alias alias-name`|Shows the alias actual command|
-|`date +format` E.g. `date +%d/%m/%Y`|Shows the alias actual command|
+|`date +format` E.g. `date +%d/%m/%Y`|Date command|
 |`ls -al`|List. a - all <br> l - long listing format <br> d means directory - means file|
 |`less file.txt`|Show file contents (similar to cat but allows to move up and down)|
 |`more file.txt`|Show file contents (similar to cat but allows to move up and down)|
@@ -29,7 +29,7 @@ have been compiled from the following 2 courses.
 |`find -E . -not -regex ".*/file_name[0-9].sh"`|Find files not matching the regular expression (this syntax works only in osx)|
 |`grep [-i] text_to_search /path/to/file`|Search for contents in a file , i - case insensitive|
 |`grep -v text_to_search /path/to/file`|Search for contents not matching the pattern in a file|
-|`command | grep text_to_search` <br> Eg: `find / -name "*backup*" 2>/dev/null | grep $USER`|Using pipe to combine grep with other commands|
+|command &#124; grep text_to_search <br> Eg: `find / -name "*backup*" 2>/dev/null &#124; grep $USER`|Using pipe to combine grep with other commands|
 |`command > file.txt`|adds output of command to file.txt. Creates a new file if does not exist. If exists, overwrites the contents of the file.|
 |`command >> file.txt`|adds output of command to file.txt. Creates a new file if does not exist. If exists, appends the outputs to the contents of the file.|
 |`awk`|very powerful command for pattern scanning and processing|
