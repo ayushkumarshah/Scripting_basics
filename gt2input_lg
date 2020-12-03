@@ -1,0 +1,55 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+	echo "gt2input_lg: Label graph ground truths to inputs converter"
+	echo ""
+	echo "Usage: gt2input_lg ground_truth_dir output_dir"
+	echo ""
+	echo "ground_truth_dir: directory containing ground truth lg files"
+	echo "output_dir: directory where new lg files are to be created"
+	echo ""
+	echo "Converts label graph ground truth files to label graph input files,"
+	echo "containing only the primitive nodes (N), primitive features i.e."
+	echo "connected components box coordinates (#cc) and the comment lines."
+	echo ""
+	exit 0
+fi
+
+if [ ! $# -eq 2 ]; then
+    echo "Error: Not enough arguments provided"
+    exit 1
+fi
+
+INPUT_DIR=$1
+OUTPUT_DIR=$2
+
+if [ ! -d "$INPUT_DIR" ] 
+then
+  echo "Error: Input directory does not exist"
+	exit 1
+fi
+
+if [ ! -d "$OUTPUT_DIR" ] 
+then
+  echo "Warning: Output directory does not exist"
+	echo -n "Would like to create this directory? (y/n)"
+  read ANSWER
+  case $ANSWER in
+    y|Y|[yY][eE][sS])
+			mkdir -p $OUTPUT_DIR
+			echo "Output directory created"
+      ;;
+    n|N|[nN][oO])
+			exit 1
+      ;;
+  esac
+fi
+
+for FILE in $INPUT_DIR/*
+	do
+		OUTPUT_FILE=`basename $FILE`
+		OUTPUT_FILE="$OUTPUT_DIR/$OUTPUT_FILE"
+		grep '#cc\|# |N' $FILE > $OUTPUT_FILE
+		echo $FILE ">" $OUTPUT_FILE
+	done

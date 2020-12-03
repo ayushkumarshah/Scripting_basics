@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# $USER -> "user_name"
+# $HOME -> "/Users/user_name"
+
+DESKTOP_PATH="/Users/$USER/Desktop/"
+DESKTOP_PATH_="$HOME/Desktop/"
+
+# Use backticks to assign command outputs to a variable directly. E.g. below
+DATE=`date +%d_%m_%Y`
+
+BACKUP_PATH="$DESKTOP_PATH/codes/"
+BACKUP="backup_"
+EXT=".tar"
+
+# Use $ to reference defined variables
+FILE_NAME=$DESKTOP_PATH$BACKUP$DATE$EXT
+
+echo $FILE_NAME
+
+tar cvfz $FILE_NAME $BACKUP_PATH
+# tar - tape archive, also does not require - like other commands since old
+# c - create
+# f - archive on file instead of tape
+# z - zip. Don't use if you use gzip
+# v - verbose
+
+# gzip $FILE_NAME
+
+# Mail the created backup file
+# Check if backup file exists
+if test -f "$FILE_NAME"; then
+  echo "Here is you daily backup" | mail -A $FILE_NAME -s "Today's Backup"
+  ayush.kumar.shah@gmail.com
+else
+  echo $DATE " There was a problem creating the backup file." >> $HOME/error.log
+fi
+

@@ -1,0 +1,63 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+	echo "correct_lg: Label graph ground truths correction"
+	echo ""
+	echo "Usage: correct_lg ground_truth_dir output_dir"
+	echo ""
+	echo "ground_truth_dir: directory containing ground truth lg files"
+	echo "output_dir: directory where new lg files are to be created"
+	echo ""
+	echo "Correct the existing ground truth lg files to include primitive"
+	echo "nodes (N)"
+	echo ""
+	exit 0
+fi
+
+if [ ! $# -eq 2 ]; then
+    echo "Error: Not enough arguments provided"
+    exit 1
+fi
+
+INPUT_DIR=$1
+OUTPUT_DIR=$2
+
+if [ ! -d "$INPUT_DIR" ] 
+then
+  echo "Error: Input directory does not exist"
+	exit 1
+fi
+
+if [ ! -d "$OUTPUT_DIR" ] 
+then
+  echo "Warning: Output directory does not exist"
+	echo -n "Would like to create this directory? (y/n)"
+  read ANSWER
+  case $ANSWER in
+    y|Y|[yY][eE][sS])
+			mkdir -p $OUTPUT_DIR
+			echo "Output directory created"
+      ;;
+    n|N|[nN][oO])
+			exit 1
+      ;;
+  esac
+fi
+
+for FILE in $INPUT_DIR/*
+	do
+		OUTPUT_FILE=`basename $FILE`
+		OUTPUT_FILE="$OUTPUT_DIR/$OUTPUT_FILE"
+		cat $FILE > $OUTPUT_FILE
+		sed -i 's/PRIMITAVES/PRIMITIVE FEATURES/' $OUTPUT_FILE
+		while read -r line
+			do
+				echo -e "\n# [ PRIMITIVE NODES (N) ]">> $OUTPUT_FILE
+				echo -e "N, 0, _, 1.0">> $OUTPUT_FILE
+				component=`awk {'print "N, " $2 " _, 1.0"'}`
+				echo -e "$component\n">> $OUTPUT_FILE
+				# -e tells to interpret \n as new lineAA
+			done < <(grep '#cc' $FILE)
+		echo $FILE ">" $OUTPUT_FILE
+	done
