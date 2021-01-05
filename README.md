@@ -28,9 +28,14 @@ have been compiled from the following 2 courses.
 |`du -sh .`                 |Show total size occupied by current directory           |
 |`du -sh *`                 |Show size of each file or folder in current directory           |
 |du -sh * &#124; tail -1  |Show total size occupied by the last file in the current directory|
+|ps ax[c] [&#124; less]|List currently running programs. <br>c - easier to read<br>less - easier to navigate|
+|`pidof process-name`|Get the process id of a running process.|
+|`kill process-id`|Kill the process|
+|`uname [-[s][a]]`|Display name of OS Distribution. a - Detailed info.|
 |`stat filename`            |Display file status         |
 |`alias alias-name`|Shows the alias actual command|
 |`date +format` E.g. `date +%d/%m/%Y`|Date command|
+|`cal [-3] [[month] year]` <br> E.g. `cal -3 june 1996` or `cal 1997` or `cal`|Calendar command. -3 means show previous and the next month as well.|
 |`less file.txt`|Show file contents (similar to cat but allows to move up and down)|
 |`more file.txt`|Show file contents (similar to cat but allows to move up and down)|
 |`rm -ir`|Remove. i - prompt to ask permission for each file. r - recursively delete|
@@ -50,7 +55,7 @@ have been compiled from the following 2 courses.
 |`<C-T>`|fzf: fuzzy finding files or directories <br> You need to install fzf|
 |`<C-R>`|fzf: fuzzy finding commands in history|
 |`<Esc-C>`|fzf: fuzzy finding files or directories from current path|
-|`top` or `htop` or `ytop`             |Process info and CPU Usage  (You need to install htop or ytop)|
+|`top` or `htop` or `ytop` or `gotop`             |Process info and CPU Usage  (You need to install htop or ytop)|
 |`tree [-aldf][-L level][-P pattern][-I pattern][-o filename] `|display directory's contents in a  tree <br> a - all files <br> l - symbolic links <br> d - directories only <br> L - limit number of levels of directory <br> I - files not matching pattern <br> P - files matching pattern <br> o - output to filename <br> You need to install tree|
 
 test command and [[]] are equivalent
