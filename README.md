@@ -45,7 +45,7 @@ have been compiled from the following 2 courses.
 |`find . -name "file_name" -exec grep "Hello" -i {} \;`|Find and search "Hello" in files matching the filename|
 |`find -E . -regex ".*/file_name[0-9].sh"`|Find files matching the regular expression (this syntax works only in osx)|
 |`find -E . -not -regex ".*/file_name[0-9].sh"`|Find files not matching the regular expression (this syntax works only in osx)|
-|command &#124; grep text_to_search <br> Eg: `find / -name "*backup*" 2>/dev/null &#124; grep $USER`|Using pipe to combine grep with other commands|
+|command &#124; grep text_to_search <br> Eg: find / -name "*backup*" 2>/dev/null &#124; grep $USER|Using pipe to combine grep with other commands|
 |`awk`|very powerful command for pattern scanning and processing|
 |`<C-T>`|fzf: fuzzy finding files or directories <br> You need to install fzf|
 |`<C-R>`|fzf: fuzzy finding commands in history|
