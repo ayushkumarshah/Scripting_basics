@@ -52,13 +52,61 @@ have been compiled from the following 2 courses.
 |`find -E . -not -regex ".*/file_name[0-9].sh"`|Find files not matching the regular expression (this syntax works only in osx)|
 |command &#124; grep text_to_search <br> Eg: find / -name "*backup*" 2>/dev/null &#124; grep $USER|Using pipe to combine grep with other commands|
 |`awk`|very powerful command for pattern scanning and processing|
+|`time ( some-command )`| Get execution time of a command
 |`<C-T>`|fzf: fuzzy finding files or directories <br> You need to install fzf|
 |`<C-R>`|fzf: fuzzy finding commands in history|
 |`<Esc-C>`|fzf: fuzzy finding files or directories from current path|
 |`top` or `htop` or `ytop` or `gotop`             |Process info and CPU Usage  (You need to install htop or ytop)|
 |`tree [-aldf][-L level][-P pattern][-I pattern][-o filename] `|display directory's contents in a  tree <br> a - all files <br> l - symbolic links <br> d - directories only <br> L - limit number of levels of directory <br> I - files not matching pattern <br> P - files matching pattern <br> o - output to filename <br> You need to install tree|
 
-`test some-condition` command and `[[some-condition]]` are equivalent
+
+## Some quick tips:
+
+- `test some-condition` command and `[[some-condition]]` are equivalent
+- OUT=`command` and OUT=$(command) are equivalent and used to store output of
+    the command to a variable
+- You can use `command` or $(command) in a bash shell and press tab to replace
+    the command by its output and use it. Example: 
+  ```zsh
+  mv `pwd` /destination-path/
+  mv $(pwd) /destination-path/
+  ```
+
+## Extracting Substrings
+
+```zsh
+#!/bin/bash
+var="apple orange"
+
+# Print apple
+echo "${var%% *}"  # Fastest: about 0.001 sec
+echo $var | cut -d' ' -f1  # Faster than awk, slower than above
+echo $var | awk '{print $1}'  # Slowest : about 0.16 sec
+
+# Print orange
+echo "${var##* }"  # Fastest: about 0.001 sec
+echo $var | cut -d' ' -f2  # Faster than awk, slower than above
+echo $var | awk '{print $2}'  # Slowest : about 0.16 sec
+
+# Working:
+# #-deletes from beginning
+echo "${var#app}"  # Removes substring 'app' from the beginning
+echo "${var#orange}"  # Removes nothing
+echo "${var#*or}"  # Removes substring 'apple or' from the beginning
+echo "${var#*}"  # Removes nothing - # means conservative so as less as possible.
+echo "${var##*}"  # Removes everything - ## means greedy - as much as possible
+echo "${var##p}"  # Removes substring 'app' from the beginning
+echo "${var#p}"  # Removes substring 'ap' from the beginning
+
+# %-deletes from the end
+echo "${var%app}"  # Removes nothing
+echo "${var%e}"  # Removes e from end
+echo "${var%nge}"  # Removes substring 'nge' from the end
+echo "${var%n*}"  # Removes substring 'nge' from the end
+echo "${var%p*}"  # Removes substring 'ple orange' from the end
+echo "${var%%p*}"  # Removes substring 'pple orange' from the end
+
+```
 
 ## Running bash script in debug mode
 
